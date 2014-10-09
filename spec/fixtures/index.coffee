@@ -1,6 +1,18 @@
 tv4 = require('tv4')
 
-_ = require('../../lib/util/normalize-schema')
+idSchema =
+  schema:
+    id: 'http://x.y.z/rootschema.json#'
+    schema1:
+      id: '#foo'
+    schema2:
+      id: 'otherschema.json'
+      nested:
+        id: '#bar'
+      alsonested:
+        id: 't/inner.json#a'
+    schema3:
+      id: 'some://where.else/completely#'
 
 personDetails =
   schema:
@@ -35,10 +47,7 @@ personWithAddress =
         $ref: 'personDetails'
       address:
         $ref: 'addressDetails'
-    required: [].concat(
-        personDetails.schema.required
-        addressDetails.schema.required
-      )
+    required: [].concat(personDetails.schema.required).concat(addressDetails.schema.required)
   example:
     firstName: 'John'
     lastName: 'Doe'
@@ -46,16 +55,8 @@ personWithAddress =
     city: 'L.A. U.S.A.'
 
 module.exports = {
+  idSchema
   personDetails
   addressDetails
   personWithAddress
 }
-
-module.exports.schemas = []
-
-for name, fixture of module.exports
-  if fixture.schema
-    fixed = _(fixture.schema)
-
-    tv4.addSchema fixed.id, fixture.schema
-    module.exports.schemas.push fixture.schema

@@ -1,4 +1,9 @@
-tv4 = require('tv4')
+jasmine.Matchers::toHaveSchema = (expected, refs) ->
+  tv4 = require('tv4').freshApi()
+  tv4.addSchema(id, schema) for id, schema of refs
 
-jasmine.Matchers::toHaveSchema = (expected) ->
-  tv4.validateResult(@actual, expected).valid
+  result = tv4.validateResult(@actual, expected, true)
+
+  throw result.error if result.error
+
+  result.valid
