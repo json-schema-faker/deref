@@ -22,4 +22,12 @@ describe 'resolving $ref values', ->
     refs = [_.personDetails.schema, _.addressDetails.schema]
     schema = $(_.personWithAddress.schema, refs)
 
+    expect(schema).toHaveRefs()
+    expect(Object.keys($.refs).length).toEqual 3
     expect(_.personWithAddress.example).toHaveSchema schema, $.refs
+
+  it 'should expand dereferenced schemas', ->
+    refs = [_.personDetails.schema, _.addressDetails.schema]
+    schema = $(_.personWithAddress.schema, refs, true)
+
+    expect(schema).not.toHaveRefs()
