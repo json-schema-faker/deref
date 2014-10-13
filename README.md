@@ -34,7 +34,7 @@ console.log($(schema).schema2.nested.id);
 Basic usage
 ===========
 
-The resulting function of calling `deref()` can accept three arguments:
+The resulting function of calling `deref()` can accept four arguments:
 
 - **fakeroot** (string)
 
@@ -54,6 +54,19 @@ The resulting function of calling `deref()` can accept three arguments:
 - **refs** (array)
 
   Any additional schemas used while dereferencing.
+
+- **ex** (boolean)
+
+  Whether do full dereferencing or not, `false` by default.
+
+Examples
+--------
+
+```javascript
+$('http://example.com', schema, true);
+$(schema, refs, true);
+$(schema, true);
+```
 
 Utilities
 ---------
