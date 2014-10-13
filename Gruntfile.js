@@ -22,4 +22,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jasmine-node');
   grunt.loadNpmTasks('grunt-eslint');
+
+  grunt.registerTask('test', ['eslint', 'jasmine_node']);
+  grunt.registerTask('default', ['test']);
 };
