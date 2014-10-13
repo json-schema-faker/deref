@@ -1,0 +1,16 @@
+{
+  "id": "personDetails",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "firstName",
+    "lastName"
+  ],
+  "type": "object"
+}

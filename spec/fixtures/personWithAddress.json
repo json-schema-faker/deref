@@ -1,0 +1,22 @@
+{
+  "allOf": [
+    {
+      "$ref": "#/schemas/address"
+    },
+    {
+      "$ref": "personDetails.json"
+    }
+  ],
+  "id": "personWithAddress.json",
+  "required": [
+    "firstName",
+    "lastName",
+    "street",
+    "city"
+  ],
+  "schemas": {
+    "address": {
+      "$ref": "addressDetails.json"
+    }
+  }
+}
