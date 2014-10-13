@@ -1,5 +1,5 @@
 {
-  "id": "personDetails",
+  "id": "personDetails.json",
   "properties": {
     "firstName": {
       "type": "string"

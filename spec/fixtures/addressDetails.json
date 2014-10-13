@@ -1,5 +1,5 @@
 {
-  "id": "addressDetails",
+  "id": "addressDetails.json",
   "properties": {
     "city": {
       "type": "string"
