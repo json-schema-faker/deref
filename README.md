@@ -90,4 +90,4 @@ Aside the basics of `$`, this function will include:
 
 Note that calling `$(schema)` will not read/download any local/remote files.
 
-[![Build Status](https://travis-ci.org/pateketrueke/deref.png?branch=master)](https://travis-ci.org/pateketrueke/deref)
+[![Build Status](https://travis-ci.org/pateketrueke/deref.png?branch=master)](https://travis-ci.org/pateketrueke/deref) [![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref)
