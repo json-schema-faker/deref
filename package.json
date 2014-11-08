@@ -5,10 +5,8 @@
   "main": "lib/index.js",
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-eslint": "^1.1.0",
-    "grunt-jasmine-node": "^0.2.1",
-    "tv4": "^1.1.4"
+    "grunt-parts": "^0.2.2",
+    "z-schema": "^3.0.1"
   },
   "dependencies": {
     "jsonpointer": "^1.1.0"
