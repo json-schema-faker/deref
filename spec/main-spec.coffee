@@ -39,6 +39,23 @@ describe 'resolving $ref values', ->
 
     expect(_.personWithAddress.example).toHaveSchema schema, $.refs
 
+    a =
+      id: 'a'
+      type: 'object'
+      properties: b: $ref: 'b'
+
+    b =
+      id: 'b'
+      type: 'string'
+
+    c =
+      id: 'c'
+      type: 'array'
+      items: $ref: 'a'
+
+    expect($(c, [b, a]).id).toBe 'http://json-schema.org/c#'
+    expect($(c, [b, a], true).items.properties.b.type).toBe 'string'
+
   it 'should pass http://json-schema.org/draft-04/schema', ->
     backup = JSON.stringify(_.schema.schema)
     schema = $('http://json-schema.org/draft-04/schema', _.schema.schema)
