@@ -28,9 +28,9 @@ describe 'resolving $ref values', ->
 
   it 'should expand dereferenced schemas', ->
     refs = [_.personDetails.schema, _.addressDetails.schema]
-    schema = $(_.personWithAddress.schema, refs)
+    schema = $(_.personWithAddress.schema, refs, true)
 
-    expect(schema).toHaveRefs 3
+    expect(schema).toHaveRefs 0
     expect(Object.keys($.refs).length).toEqual 3
     expect(_.personWithAddress.schema).toHaveRefs 3
     expect(_.personWithAddress.schema.id).toBe 'personWithAddress.json'
@@ -40,8 +40,10 @@ describe 'resolving $ref values', ->
     expect(_.personWithAddress.example).toHaveSchema schema, $.refs
 
   it 'should pass http://json-schema.org/draft-04/schema', ->
+    backup = JSON.stringify(_.schema.schema)
     schema = $('http://json-schema.org/draft-04/schema', _.schema.schema)
 
+    expect(backup).not.toBe JSON.stringify(schema)
     expect(schema).toHaveRefs 13
 
     expect(_.idSchema.schema).toHaveSchema schema
