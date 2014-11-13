@@ -37,7 +37,8 @@ describe 'resolving $ref values', ->
 
     expect(_.personWithAddress.example).toHaveSchema schema, $.refs
 
-  xit 'should test $schema', ->
-    schema = $(_.schema.schema, true)
-    #$.util.normalizeSchema schema
-    console.log JSON.stringify(schema, null, 2)
+  it 'should pass http://json-schema.org/draft-04/schema', ->
+    expect(_.idSchema.schema).toHaveSchema _.schema.schema
+    expect(_.personDetails.schema).toHaveSchema _.schema.schema
+    expect(_.addressDetails.schema).toHaveSchema _.schema.schema
+    expect(_.personWithAddress.schema).toHaveSchema _.schema.schema

@@ -18,17 +18,24 @@ jasmine.Matchers::toHaveRefs = (expected = 0) ->
 jasmine.Matchers::toHaveSchema = (expected, refs) ->
   # TODO: try other validators
 
-  validator = new ZSchema
-  validator.setRemoteReference(id, json) for id, json of refs
-  validator.setRemoteReference 'http://json-schema.org/schema', JSONSchema
+  #validator = new ZSchema
+  #  ignoreUnresolvableReferences: true
 
-  valid = validator.validate @actual, expected
+  #schemas = []
+  #schemas.push(json) for id, json of refs
 
-  if errors = validator.getLastErrors() or not valid
-    throw errors.map((e) -> e.message).join '\n'
+  #validator.validateSchema schemas
+  #validator.setRemoteReference(id, json) for id, json of refs
+  #validator.setRemoteReference 'http://json-schema.org/schema', JSONSchema
+
+  #valid = validator.validate @actual, expected
+
+  #if errors = validator.getLastErrors() or not valid
+  #  throw errors.map((e) -> e.message).join '\n'
 
   validator = tv4.freshApi()
   validator.addSchema(id, json) for id, json of refs
+  validator.addSchema 'http://json-schema.org/draft-04/schema', JSONSchema
 
   result = validator.validateResult(@actual, expected, true)
 
