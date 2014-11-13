@@ -5,9 +5,48 @@ A simple way for solving `$ref` values:
 
 ```javascript
 var deref = require('deref');
+```
 
-var $ = deref();
+Schema dereferencing
+--------------------
 
+```javascript
+$ = deref();
+
+var a = {
+  id: 'a',
+  type: 'object',
+  properties: {
+    b: {
+      $ref: 'b'
+    }
+  }
+};
+
+var b = {
+  id: 'b',
+  type: 'string'
+};
+
+var c = {
+  id: 'c',
+  type: 'array',
+  items: {
+    $ref: 'a'
+  }
+};
+
+console.log($(c, [b, a]).id);
+// output: http://json-schema.org/c
+
+console.log($(c, [b, a]).items.properties.b.type);
+// output: string
+```
+
+Schema normalization
+--------------------
+
+```javascript
 var schema = {
   id: 'http://x.y.z/rootschema.json#',
   schema1: {
@@ -27,14 +66,15 @@ var schema = {
   }
 };
 
-console.log($(schema).schema2.nested.id);
+console.log(deref.util.normalizeSchema(schema).schema2.nested.id);
 // output: http://x.y.z/otherschema.json#bar
 ```
+
 
 Basic usage
 ===========
 
-The resulting function of calling `deref()` can accept four arguments:
+The resulting function of calling `deref()` can accept three arguments:
 
 - **fakeroot** (string)
 
@@ -51,21 +91,19 @@ The resulting function of calling `deref()` can accept four arguments:
 
   The JSON-Schema object for dereferencing.
 
-- **refs** (array)
+- **refs** (array|object)
 
   Any additional schemas used while dereferencing.
 
-- **ex** (boolean)
-
-  Whether do full dereferencing or not, `false` by default.
+Since `0.2.0` full dereferencing is always performed.
 
 Examples
 --------
 
 ```javascript
-$('http://example.com', schema, true);
-$(schema, refs, true);
-$(schema, true);
+$('http://example.com', schema);
+$(schema, refs);
+$(schema);
 ```
 
 Utilities
@@ -85,9 +123,9 @@ Aside the basics of `$`, this function will include:
   - `parseURI(href)`
   - `resolveURL(base, href)`
   - `getDocumentURI(path)`
-  - `cloneSchema(schema, refs, id)`
+  - `resolveSchema(schema, refs)`
   - `normalizeSchema(fakeroot, schema)`
 
 Note that calling `$(schema)` will not read/download any local/remote files.
 
-[![Build Status](https://travis-ci.org/pateketrueke/deref.png?branch=master)](https://travis-ci.org/pateketrueke/deref) [![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref)
+[![Build Status](https://travis-ci.org/pateketrueke/deref.png?branch=master)](https://travis-ci.org/pateketrueke/deref) [![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref) [![Coverage Status](https://coveralls.io/repos/pateketrueke/deref/badge.png?branch=master)](https://coveralls.io/r/pateketrueke/deref?branch=master)
