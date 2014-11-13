@@ -15,7 +15,7 @@ describe 'resolving $ref values', ->
     backup = JSON.stringify(schema)
     result = $.util.normalizeSchema schema
 
-    expect(schema).not.toHaveRefs()
+    expect(schema).toHaveRefs(0)
     expect(schema.schema1.id).toBe '#foo'
     expect(backup).toBe JSON.stringify(schema)
 
@@ -30,10 +30,12 @@ describe 'resolving $ref values', ->
     refs = [_.personDetails.schema, _.addressDetails.schema]
     schema = $(_.personWithAddress.schema, refs)
 
-    expect(schema).not.toHaveRefs()
+    expect(schema).toHaveRefs(0)
     expect(Object.keys($.refs).length).toEqual 3
     expect(_.personWithAddress.schema).toHaveRefs 3
     expect(_.personWithAddress.schema.id).toBe 'personWithAddress.json'
+
+    expect(_.personWithAddress.example).toHaveSchema schema, $.refs
 
   xit 'should test $schema', ->
     schema = $(_.schema.schema, true)
