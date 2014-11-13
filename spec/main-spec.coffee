@@ -15,7 +15,7 @@ describe 'resolving $ref values', ->
     backup = JSON.stringify(schema)
     result = $.util.normalizeSchema schema
 
-    expect(schema).toHaveRefs(0)
+    expect(schema).toHaveRefs 0
     expect(schema.schema1.id).toBe '#foo'
     expect(backup).toBe JSON.stringify(schema)
 
@@ -30,15 +30,21 @@ describe 'resolving $ref values', ->
     refs = [_.personDetails.schema, _.addressDetails.schema]
     schema = $(_.personWithAddress.schema, refs)
 
-    expect(schema).toHaveRefs(0)
+    expect(schema).toHaveRefs 3
     expect(Object.keys($.refs).length).toEqual 3
     expect(_.personWithAddress.schema).toHaveRefs 3
     expect(_.personWithAddress.schema.id).toBe 'personWithAddress.json'
 
+    $.refs['http://json-schema.org/schema'] = _.schema.schema
+
     expect(_.personWithAddress.example).toHaveSchema schema, $.refs
 
   it 'should pass http://json-schema.org/draft-04/schema', ->
-    expect(_.idSchema.schema).toHaveSchema _.schema.schema
-    expect(_.personDetails.schema).toHaveSchema _.schema.schema
-    expect(_.addressDetails.schema).toHaveSchema _.schema.schema
-    expect(_.personWithAddress.schema).toHaveSchema _.schema.schema
+    schema = $('http://json-schema.org/draft-04/schema', _.schema.schema)
+
+    expect(schema).toHaveRefs 13
+
+    expect(_.idSchema.schema).toHaveSchema schema
+    expect(_.personDetails.schema).toHaveSchema schema
+    expect(_.addressDetails.schema).toHaveSchema schema
+    expect(_.personWithAddress.schema).toHaveSchema schema
