@@ -37,9 +37,9 @@ var c = {
 };
 
 console.log($(c, [b, a]).id);
-// output: http://json-schema.org/c
+// output: http://json-schema.org/c#
 
-console.log($(c, [b, a]).items.properties.b.type);
+console.log($(c, [b, a], true).items.properties.b.type);
 // output: string
 ```
 
@@ -95,15 +95,17 @@ The resulting function of calling `deref()` can accept three arguments:
 
   Any additional schemas used while dereferencing.
 
-Since `0.2.0` full dereferencing is always performed.
+- **ex** (boolean)
+
+  Whether do full dereferencing or not, `false` by default.
 
 Examples
 --------
 
 ```javascript
-$('http://example.com', schema);
-$(schema, refs);
-$(schema);
+$('http://example.com', schema, true);
+$(schema, refs, true);
+$(schema, true);
 ```
 
 Utilities
