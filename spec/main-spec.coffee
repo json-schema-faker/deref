@@ -46,7 +46,9 @@ describe 'resolving $ref values', ->
     expect(backup).not.toBe JSON.stringify(schema)
     expect(schema).toHaveRefs 13
 
-    expect(_.idSchema.schema).toHaveSchema schema
-    expect(_.personDetails.schema).toHaveSchema schema
-    expect(_.addressDetails.schema).toHaveSchema schema
-    expect(_.personWithAddress.schema).toHaveSchema schema
+    $.refs['http://json-schema.org/draft-04/schema'] = _.schema.schema
+
+    expect(_.idSchema.schema).toHaveSchema schema, $.refs
+    expect(_.personDetails.schema).toHaveSchema schema, $.refs
+    expect(_.addressDetails.schema).toHaveSchema schema, $.refs
+    expect(_.personWithAddress.schema).toHaveSchema schema, $.refs
