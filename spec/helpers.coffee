@@ -21,11 +21,7 @@ jasmine.Matchers::toHaveSchema = (expected, refs) ->
   validator = new ZSchema
     ignoreUnresolvableReferences: false
 
-  schemas = []
-  schemas.push(json) for id, json of refs
-
-  validator.validateSchema schemas
-  validator.setRemoteReference(id, json) for id, json of refs
+  validator.setRemoteReference(id, JSON.stringify(json)) for id, json of refs
 
   valid = validator.validate @actual, expected
 
