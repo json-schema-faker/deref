@@ -1,5 +1,3 @@
-require('./helpers')
-
 $ = null
 _ = require('./fixtures')
 

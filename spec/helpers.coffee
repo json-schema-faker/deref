@@ -16,6 +16,8 @@ jasmine.Matchers::toHaveRefs = (expected = 0) ->
   if expected isnt nodes = refCount @actual
     throw new Error "Invalid $ref count #{nodes}, expected #{expected}"
 
+  true
+
 jasmine.Matchers::toHaveSchema = (expected, refs) ->
   # TODO: try other validators
 
@@ -34,10 +36,14 @@ jasmine.Matchers::toHaveSchema = (expected, refs) ->
         e.message
     ).join('\n') or "Invalid schema #{JSON.stringify @actual}"
 
-  validator = tv4.freshApi()
-  validator.addSchema(id, clone(json)) for id, json of refs
+  api = tv4.freshApi()
 
-  result = validator.validateResult(@actual, clone(expected), true)
+  api.cyclicCheck = false;
+  api.banUnknown = false;
+
+  api.addSchema(id, json) for id, json of refs
+
+  result = api.validateResult(@actual, clone(expected), api.cyclicCheck, api.banUnknown)
 
   throw 'Missing ' + result.missing.join(', ') if result.missing.length
 
@@ -49,3 +55,5 @@ jasmine.Matchers::toHaveSchema = (expected, refs) ->
   result = jay.validate @actual, clone(expected)
 
   throw result.map((e) -> e.message).join('\n') or "Invalid schema #{JSON.stringify @actual}" if result.length
+
+  true
