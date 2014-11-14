@@ -3,13 +3,17 @@
   "version": "0.2.0",
   "description": "JSON-Schema $ref resolution",
   "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pateketrueke/deref"
+  },
   "devDependencies": {
     "clone": "^0.1.18",
     "grunt": "^0.4.5",
-    "grunt-parts": "^0.2.2",
+    "grunt-parts": "^0.3.0",
     "jayschema": "^0.3.1",
     "tv4": "^1.1.4",
-    "z-schema": "^3.0.1"
+    "z-schema": "^3.1.3"
   },
   "dependencies": {
     "jsonpointer": "^1.1.0"
