@@ -51,6 +51,9 @@ describe 'resolving $ref values', ->
       type: 'array'
       items: $ref: 'a'
 
+    expect($({}).id).toBe 'http://json-schema.org/schema#'
+    expect($({}).$schema).toBe 'http://json-schema.org/schema#'
+
     expect($(c, [b, a]).id).toBe 'http://json-schema.org/c#'
     expect($(c, [b, a], true).items.properties.b.type).toBe 'string'
 
