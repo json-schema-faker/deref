@@ -8,7 +8,7 @@ describe 'resolving $ref values', ->
   beforeEach ->
     $ = deref()
 
-  it 'should resolve IDs', ->
+  it 'should normalize IDs', ->
     schema = _.idSchema.schema
     backup = JSON.stringify(schema)
     result = $.util.normalizeSchema schema
@@ -23,6 +23,14 @@ describe 'resolving $ref values', ->
     expect(jsptr.get(result, '/schema2/nested').id).toEqual 'http://x.y.z/otherschema.json#bar'
     expect(jsptr.get(result, '/schema2/alsonested').id).toEqual 'http://x.y.z/t/inner.json#a'
     expect(jsptr.get(result, '/schema3').id).toEqual 'some://where.else/completely#'
+
+  it 'should normalize $refs', ->
+    schema = _.refSchema.schema
+    result = $.util.normalizeSchema schema
+
+    expect(result.id).toBe 'http://json-schema.org/schema#'
+    expect(result.definitions.prop.$ref).toBe 'http://json-schema.org/a/c.json#'
+    expect(result.definitions.sub.allOf[1].$ref).toBe 'http://json-schema.org/a/x#/y/z'
 
   it 'should expand dereferenced schemas', ->
     refs = [_.personDetails.schema, _.addressDetails.schema]

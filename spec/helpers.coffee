@@ -54,6 +54,6 @@ jasmine.Matchers::toHaveSchema = (expected, refs) ->
 
   result = jay.validate @actual, clone(expected)
 
-  throw result.map((e) -> e.message).join('\n') or "Invalid schema #{JSON.stringify @actual}" if result.length
+  throw result.map((e) -> e.desc or e.message).join('\n') or "Invalid schema #{JSON.stringify @actual}" if result.length
 
   true

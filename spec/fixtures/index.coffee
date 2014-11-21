@@ -4,6 +4,9 @@ schema =
 idSchema =
   schema: require('./idSchema.json')
 
+refSchema =
+  schema: require('./refSchema.json')
+
 personDetails =
   schema: require('./personDetails.json')
 
@@ -17,6 +20,7 @@ personWithAddress =
 module.exports = {
   schema
   idSchema
+  refSchema
   personDetails
   addressDetails
   personWithAddress
