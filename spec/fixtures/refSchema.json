@@ -7,19 +7,19 @@
     }
   },
   "definitions": {
-    "id": "a/b",
     "sub": {
-      "id": "c/d",
       "allOf": [
         {
           "type": "string"
         },
         {
+          "id": "a/b/c",
           "$ref": "../x#/y/z"
         }
       ]
     },
     "prop": {
+      "id": "a/b",
       "$ref": "c.json"
     }
   }
