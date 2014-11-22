@@ -32,6 +32,15 @@ describe 'resolving $ref values', ->
     expect(result.definitions.prop.$ref).toBe 'http://json-schema.org/a/c.json#'
     expect(result.definitions.sub.allOf[1].$ref).toBe 'http://json-schema.org/a/x#/y/z'
 
+    expect(->
+      $.util.normalizeSchema
+        type: 'object'
+        properties:
+          something:
+            type: 'any'
+            $ref: 'other'
+    ).toThrow()
+
   it 'should expand dereferenced schemas', ->
     refs = [_.personDetails.schema, _.addressDetails.schema]
     schema = $(_.personWithAddress.schema, refs, true)
