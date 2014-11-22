@@ -43,15 +43,18 @@ describe 'resolving $ref values', ->
 
     expect(_.personWithAddress.example).toHaveSchema schema, $.refs
 
+    expect($({}).id).toBe 'http://json-schema.org/schema#'
+    expect($({}).$schema).toBe 'http://json-schema.org/schema#'
+
     a =
       id: 'a'
       type: 'object'
       properties: b:
         title: 'test'
-        $ref: 'b'
+        $ref: '#b'
 
     b =
-      id: 'b'
+      id: '#b'
       type: 'string'
 
     c =
@@ -59,14 +62,14 @@ describe 'resolving $ref values', ->
       type: 'array'
       items: $ref: 'a'
 
-    expect($({}).id).toBe 'http://json-schema.org/schema#'
-    expect($({}).$schema).toBe 'http://json-schema.org/schema#'
+    expect($('http://api/schema#', c, [b, a]).id).toBe 'http://api/c#'
 
-    expect($(c, [b, a]).id).toBe 'http://json-schema.org/c#'
+    expect($.refs.b.title).toBeUndefined()
+    expect($.refs.b.type).toBe 'string'
+    expect($.refs.b.id).toBe 'http://api/schema#b'
+
     expect($(c, [b, a], true).items.properties.b.type).toBe 'string'
-
-    expect($(c, [b, a], true).items.properties.b.title).toBe 'test'
-    expect($.refs['http://json-schema.org/b'].title).toBeUndefined()
+    expect($(c, [b, a], true).items.properties.b.title).toBeUndefined()
 
   it 'should pass http://json-schema.org/draft-04/schema', ->
     backup = JSON.stringify(_.schema.schema)
