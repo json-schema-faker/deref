@@ -2,7 +2,6 @@ $ = null
 _ = require('./fixtures')
 
 deref = require('../lib')
-jsptr = require('jsonpointer')
 
 describe 'resolving $ref values', ->
   beforeEach ->
@@ -17,12 +16,11 @@ describe 'resolving $ref values', ->
     expect(schema.schema1.id).toBe '#foo'
     expect(backup).toBe JSON.stringify(schema)
 
-    expect(jsptr.get(result, '').id).toEqual 'http://x.y.z/rootschema.json#'
-    expect(jsptr.get(result, '/schema1').id).toEqual 'http://x.y.z/rootschema.json#foo'
-    expect(jsptr.get(result, '/schema2').id).toEqual 'http://x.y.z/otherschema.json#'
-    expect(jsptr.get(result, '/schema2/nested').id).toEqual 'http://x.y.z/otherschema.json#bar'
-    expect(jsptr.get(result, '/schema2/alsonested').id).toEqual 'http://x.y.z/t/inner.json#a'
-    expect(jsptr.get(result, '/schema3').id).toEqual 'some://where.else/completely#'
+    expect(result.schema1.id).toEqual 'http://x.y.z/rootschema.json#foo'
+    expect(result.schema2.id).toEqual 'http://x.y.z/otherschema.json#'
+    expect(result.schema2.nested.id).toEqual 'http://x.y.z/otherschema.json#bar'
+    expect(result.schema2.alsonested.id).toEqual 'http://x.y.z/t/inner.json#a'
+    expect(result.schema3.id).toEqual 'some://where.else/completely#'
 
   it 'should normalize $refs', ->
     schema = _.refSchema.schema
