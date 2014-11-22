@@ -46,7 +46,9 @@ describe 'resolving $ref values', ->
     a =
       id: 'a'
       type: 'object'
-      properties: b: $ref: 'b'
+      properties: b:
+        title: 'test'
+        $ref: 'b'
 
     b =
       id: 'b'
@@ -62,6 +64,9 @@ describe 'resolving $ref values', ->
 
     expect($(c, [b, a]).id).toBe 'http://json-schema.org/c#'
     expect($(c, [b, a], true).items.properties.b.type).toBe 'string'
+
+    expect($(c, [b, a], true).items.properties.b.title).toBe 'test'
+    expect($.refs['http://json-schema.org/b'].title).toBeUndefined()
 
   it 'should pass http://json-schema.org/draft-04/schema', ->
     backup = JSON.stringify(_.schema.schema)
