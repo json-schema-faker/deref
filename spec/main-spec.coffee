@@ -10,7 +10,12 @@ describe 'resolving $ref values', ->
   it 'should normalize IDs', ->
     schema = _.idSchema.schema
     backup = JSON.stringify(schema)
-    result = $.util.normalizeSchema schema
+
+    refs = {}
+    result = $.util.normalizeSchema schema, (data) ->
+      refs[data.id] = data
+
+    expect(Object.keys(refs).length).toBe 6
 
     expect(schema).toHaveRefs 0
     expect(schema.schema1.id).toBe '#foo'
@@ -61,15 +66,21 @@ describe 'resolving $ref values', ->
       id: 'c'
       type: 'array'
       items: $ref: 'a'
+      others: d: id: '#e'
 
-    expect($('http://api/schema#', c, [b, a]).id).toBe 'http://api/c#'
+    result = $('http://api/schema#', c, [b, a], true)
+
+    expect(result.id).toBe 'http://api/c#'
 
     expect($.refs.b.title).toBeUndefined()
     expect($.refs.b.type).toBe 'string'
     expect($.refs.b.id).toBe 'http://api/schema#b'
 
-    expect($(c, [b, a], true).items.properties.b.type).toBe 'string'
-    expect($(c, [b, a], true).items.properties.b.title).toBeUndefined()
+    expect(result.items.properties.b.type).toBe 'string'
+    expect(result.items.properties.b.title).toBeUndefined()
+
+    expect($.util.findByRef('#b', $.refs).type).toBe 'string'
+    expect($.util.findByRef('//a.b.c/d/#e', $.refs).id).toBe 'http://a.b.c/d#e'
 
   it 'should pass http://json-schema.org/draft-04/schema', ->
     backup = JSON.stringify(_.schema.schema)
