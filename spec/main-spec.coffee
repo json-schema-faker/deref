@@ -73,25 +73,24 @@ describe 'resolving $ref values', ->
     expect(result.id).toBe 'http://api/c#'
 
     expect($.refs.b.title).toBeUndefined()
-    expect($.refs.b.type).toBe 'string'
-    expect($.refs.b.id).toBe 'http://api/schema#b'
+    expect($.refs.b.$ref).toBe 'http://api/schema#b'
 
     expect(result.items.properties.b.type).toBe 'string'
     expect(result.items.properties.b.title).toBeUndefined()
 
+    expect(-> $.util.findByRef('a', $.refs)).toThrow()
     expect($.util.findByRef('#b', $.refs).type).toBe 'string'
     expect($.util.findByRef('//a.b.c/d/#e', $.refs).id).toBe 'http://a.b.c/d#e'
 
-  it 'should pass http://json-schema.org/draft-04/schema', ->
-    backup = JSON.stringify(_.schema.schema)
-    schema = $('http://json-schema.org/draft-04/schema', _.schema.schema)
+  describe 'should pass http://json-schema.org/draft-04/schema', ->
+    it 'should be able to dereference all $schema', ->
+      backup = JSON.stringify(_.schema.schema)
+      schema = $('http://json-schema.org/draft-04/schema', _.schema.schema)
 
-    expect(backup).not.toBe JSON.stringify(schema)
-    expect(schema).toHaveRefs 13
+      expect(backup).toBe JSON.stringify(schema)
+      expect(schema).toHaveRefs 24
 
-    $.refs['http://json-schema.org/draft-04/schema'] = _.schema.schema
-
-    expect(_.idSchema.schema).toHaveSchema schema, $.refs
-    expect(_.personDetails.schema).toHaveSchema schema, $.refs
-    expect(_.addressDetails.schema).toHaveSchema schema, $.refs
-    expect(_.personWithAddress.schema).toHaveSchema schema, $.refs
+      expect(_.idSchema.schema).toHaveSchema schema, $.refs
+      expect(_.personDetails.schema).toHaveSchema schema, $.refs
+      expect(_.addressDetails.schema).toHaveSchema schema, $.refs
+      expect(_.personWithAddress.schema).toHaveSchema schema, $.refs
