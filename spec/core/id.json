@@ -51,7 +51,7 @@
       {
         "description": "should expands based on parent",
         "normalize": true,
-        "hasKeys": {
+        "hasProps": {
           "schema1.id": "#foo",
           "schema1.id": "http://x.y.z/rootschema.json#foo",
           "schema2.id": "http://x.y.z/otherschema.json#",
@@ -65,7 +65,7 @@
       {
         "description": "should affect any found references",
         "normalize": true,
-        "hasKeys": {
+        "hasProps": {
           "id": "http://json-schema.org/schema#",
           "definitions.prop.$ref": "http://json-schema.org/a/c.json#",
           "definitions.sub.allOf.1.$ref": "http://json-schema.org/a/x#/y/z"
