@@ -1,0 +1,69 @@
+[
+  {
+    "description": "schema dereferencing",
+    "schemas": [
+      {
+        "id": "a",
+        "b": {
+          "key": "b-prop",
+          "$ref": "#b"
+        }
+      },
+      {
+        "id": "#b",
+        "key": "b-ref"
+      },
+      {
+        "id": "c",
+        "props": {
+          "$ref": "a"
+        },
+        "others": {
+          "d": {
+            "id": "#e"
+          }
+        }
+      }
+    ],
+    "tests": [
+      {
+        "description": "should normalize all references only",
+        "schema": "schemas.2",
+        "refs": ["schemas.1", "schemas.0"],
+        "hasRefs": 1,
+        "hasProps": {
+          "props.$ref": "http://json-schema.org/a#"
+        }
+      },
+      {
+        "description": "should perform full dereferencing",
+        "schema": "schemas.2",
+        "refs": ["schemas.1", "schemas.0"],
+        "expand": true,
+        "hasRefs": 0,
+        "hasProps": {
+          "props.b.key": "b-ref"
+        }
+      },
+      {
+        "description": "should get references by its id",
+        "schema": "schemas.2",
+        "refs": ["schemas.1", "schemas.0"],
+        "foundRefs": {
+          "a": {
+            "id": "http://json-schema.org/a#"
+          },
+          "e": {
+            "id": "http://json-schema.org/e#e"
+          },
+          "#e": {
+            "id": "http://json-schema.org/c#e"
+          },
+          "//fake/root#e": {
+            "id": "http://fake/root#e"
+          }
+        }
+      }
+    ]
+  }
+]
