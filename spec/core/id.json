@@ -1,0 +1,78 @@
+[
+  {
+    "description": "id resolution scope",
+    "schemas": [
+      {
+        "id": "http://x.y.z/rootschema.json#",
+        "schema1": {
+          "id": "#foo"
+        },
+        "schema2": {
+          "id": "otherschema.json",
+          "nested": {
+            "id": "#bar"
+          },
+          "alsonested": {
+            "id": "t/inner.json#a"
+          }
+        },
+        "schema3": {
+          "id": "some://where.else/completely#"
+        }
+      },
+      {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "$ref": "#/definitions/prop"
+          }
+        },
+        "definitions": {
+          "sub": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "id": "a/b/c",
+                "$ref": "../x#/y/z"
+              }
+            ]
+          },
+          "prop": {
+            "id": "a/b",
+            "$ref": "c.json"
+          }
+        }
+      }
+    ],
+    "tests": [
+      {
+        "description": "should expands based on parent",
+        "normalize": true,
+        "matches": {
+          "schema1.id": "#foo",
+          "schema1.id": "http://x.y.z/rootschema.json#foo",
+          "schema2.id": "http://x.y.z/otherschema.json#",
+          "schema2.nested.id": "http://x.y.z/otherschema.json#bar",
+          "schema2.alsonested.id": "http://x.y.z/t/inner.json#a",
+          "schema3.id": "some://where.else/completely#"
+        },
+        "refs": 0,
+        "use": 0
+      },
+      {
+        "description": "should affect any found references",
+        "normalize": true,
+        "matches": {
+          "id": "http://json-schema.org/schema#",
+          "definitions.prop.$ref": "http://json-schema.org/a/c.json#",
+          "definitions.sub.allOf.1.$ref": "http://json-schema.org/a/x#/y/z"
+        },
+        "refs": 3,
+        "use": 1
+      }
+    ]
+  }
+]
