@@ -91,9 +91,11 @@ The resulting function of calling `deref()` can accept three arguments:
 
   The JSON-Schema object for dereferencing.
 
-- **refs** (array|object)
+- **refs** (array)
 
   Any additional schemas used while dereferencing.
+
+  Since `0.2.4` passing an object is not longer supported.
 
 - **ex** (boolean)
 
@@ -125,8 +127,11 @@ Aside the basics of `$`, this function will include:
   - `parseURI(href)`
   - `resolveURL(base, href)`
   - `getDocumentURI(path)`
+  - `findByRef(uri, refs)`
   - `resolveSchema(schema, refs)`
   - `normalizeSchema(fakeroot, schema)`
+
+Any `refs` passed MUST be an object of normalized schemas.
 
 Note that calling `$(schema)` will not read/download any local/remote files.
 
