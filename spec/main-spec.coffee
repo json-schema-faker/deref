@@ -19,19 +19,38 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
           else
             test.schema
 
+          refs = test.refs?.map (ref) ->
+            if typeof ref is 'string'
+              pick(suite, ref)
+            else
+              ref
+
           if test.normalize
             backup = JSON.stringify(schema)
-            data = deref.util.normalizeSchema(schema)
+            data = deref.util.normalizeSchema(test.root, schema)
 
             expect(backup).toBe JSON.stringify(schema)
           else
-            $(schema, test.expand)
+            data = $(test.root, schema, refs, test.expand)
 
-          if test.example
-            expect(test.example).toHaveSchema data, test.refs
+          if test.data
+            expect(test.data).toHaveSchema data, $.refs
 
           if test.hasRefs >= 0
             expect(data).toHaveRefs test.hasRefs
 
-          if test.hasKeys
-            expect(pick(data, key)).toEqual test for key, test of test.hasKeys
+          if test.foundRefs
+            for key, value of test.foundRefs
+              found = try
+                $.util.findByRef(key, $.refs)
+              catch e
+                null
+
+              if typeof value is 'object'
+                unless found
+                  throw "Reference not found: #{key}"
+
+                expect(pick(found, k)).toEqual(v) for k, v of value
+
+          if test.hasProps
+            expect(pick(data, k)).toEqual(v) for k, v of test.hasProps
