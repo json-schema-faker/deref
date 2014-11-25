@@ -51,7 +51,7 @@
       {
         "description": "should expands based on parent",
         "normalize": true,
-        "matches": {
+        "hasKeys": {
           "schema1.id": "#foo",
           "schema1.id": "http://x.y.z/rootschema.json#foo",
           "schema2.id": "http://x.y.z/otherschema.json#",
@@ -59,19 +59,19 @@
           "schema2.alsonested.id": "http://x.y.z/t/inner.json#a",
           "schema3.id": "some://where.else/completely#"
         },
-        "refs": 0,
-        "use": 0
+        "hasRefs": 0,
+        "schema": "schemas.0"
       },
       {
         "description": "should affect any found references",
         "normalize": true,
-        "matches": {
+        "hasKeys": {
           "id": "http://json-schema.org/schema#",
           "definitions.prop.$ref": "http://json-schema.org/a/c.json#",
           "definitions.sub.allOf.1.$ref": "http://json-schema.org/a/x#/y/z"
         },
-        "refs": 3,
-        "use": 1
+        "hasRefs": 3,
+        "schema": "schemas.1"
       }
     ]
   }

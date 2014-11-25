@@ -9,12 +9,15 @@ pick = (obj, key) ->
 
 glob.sync("#{__dirname}/**/*.json").forEach (file) ->
   JSON.parse(fs.readFileSync(file)).forEach (suite) ->
-    describe suite.description, ->
+    describe "#{suite.description} (#{file.replace(__dirname + '/', '')})", ->
       suite.tests.forEach (test) ->
         it test.description, ->
           $ = deref()
 
-          schema = suite.schema or test.schema or suite.schemas[test.use]
+          schema = if typeof test.schema is 'string'
+            pick(suite, test.schema)
+          else
+            test.schema
 
           if test.normalize
             backup = JSON.stringify(schema)
@@ -24,11 +27,11 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
           else
             $(schema, test.expand)
 
-          if test.refs >= 0
-            expect(data).toHaveRefs test.refs
-
           if test.example
             expect(test.example).toHaveSchema data, test.refs
 
-          if test.matches
-            expect(pick(data, key)).toEqual test for key, test of test.matches
+          if test.hasRefs >= 0
+            expect(data).toHaveRefs test.hasRefs
+
+          if test.hasKeys
+            expect(pick(data, key)).toEqual test for key, test of test.hasKeys
