@@ -1,0 +1,48 @@
+[
+  {
+    "description": "using sub-schema definitions",
+    "schemas": [
+      {
+        "type": "object",
+        "properties": {
+          "$ref": "#/definitions/inner"
+        },
+        "definitions": {
+          "inner": {
+            "id": "x",
+            "prop": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["prop"]
+      },
+      {
+        "definitions": {
+          "inner": {
+            "id": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    ],
+    "tests": [
+      {
+        "description": "should resolve sub-schema id",
+        "schema": "schemas.0",
+        "refs": ["schemas.0"],
+        "expand": true,
+        "data": {
+          "prop": "y"
+        }
+      },
+      {
+        "description": "should fail on invalid id",
+        "schema": "schemas.1",
+        "throws": true,
+        "data": {}
+      }
+    ]
+  }
+]
