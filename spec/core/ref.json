@@ -54,13 +54,13 @@
             "id": "http://json-schema.org/a#"
           },
           "e": {
-            "id": "http://json-schema.org/e#e"
+            "id": "http://json-schema.org/c#e"
           },
           "#e": {
             "id": "http://json-schema.org/c#e"
           },
           "//fake/root#e": {
-            "id": "http://fake/root#e"
+            "id": "http://json-schema.org/c#e"
           }
         }
       }
