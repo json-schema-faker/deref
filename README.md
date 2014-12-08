@@ -137,4 +137,4 @@ Note that calling `$(schema)` will not read/download any local/remote files.
 
 Since `0.2.1` the `$schema` and `id` are no longer required for schema normalization.
 
-[![Build Status](https://travis-ci.org/pateketrueke/deref.png?branch=master)](https://travis-ci.org/pateketrueke/deref) [![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref) [![Coverage Status](https://coveralls.io/repos/pateketrueke/deref/badge.png?branch=master)](https://coveralls.io/r/pateketrueke/deref?branch=master)
+[![Build Status](https://travis-ci.org/gextech/deref.png?branch=master)](https://travis-ci.org/gextech/deref) [![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref) [![Coverage Status](https://coveralls.io/repos/gextech/deref/badge.png?branch=master)](https://coveralls.io/r/gextech/deref?branch=master)
