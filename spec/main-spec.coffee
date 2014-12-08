@@ -37,8 +37,9 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
             try
               expect(test.data).toHaveSchema data, $.refs
             catch e
-              console.log JSON.stringify(data, null, 2)
-              throw e
+              unless test.throws
+                console.log JSON.stringify(data, null, 2)
+                throw e
 
           if test.hasRefs >= 0
             expect(data).toHaveRefs test.hasRefs
