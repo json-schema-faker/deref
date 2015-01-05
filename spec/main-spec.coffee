@@ -27,7 +27,12 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
 
           if test.normalize
             backup = JSON.stringify(schema)
-            data = deref.util.normalizeSchema(test.root, schema)
+            data = try
+              deref.util.normalizeSchema(test.root, schema)
+            catch e
+              unless test.throws
+                console.log e
+                throw e
 
             expect(backup).toBe JSON.stringify(schema)
           else

@@ -279,6 +279,14 @@
           "city": "L.A. U.S.A."
         },
         "hasRefs": 3
+      },
+      {
+        "description": "should fail on unsupported versions",
+        "normalize": true,
+        "schema": {
+          "$schema": "http://json-schema.org/draft-03/schema#"
+        },
+        "throws": true
       }
     ]
   }
