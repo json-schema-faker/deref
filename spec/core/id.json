@@ -21,6 +21,7 @@
         }
       },
       {
+        "id": "#",
         "type": "object",
         "required": ["key"],
         "properties": {

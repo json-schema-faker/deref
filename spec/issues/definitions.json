@@ -3,6 +3,7 @@
     "description": "using sub-schema definitions",
     "schemas": [
       {
+        "id": "#",
         "type": "object",
         "properties": {
           "$ref": "#/definitions/inner"
