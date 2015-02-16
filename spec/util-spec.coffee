@@ -1,6 +1,6 @@
 uri = require('../lib/util/uri-helpers')
 
-xdescribe 'resolveURL()', ->
+describe 'resolveURL()', ->
   it 'should replace the last segment', ->
     expect(uri.resolveURL('a', 'b')).toBe 'b'
     expect(uri.resolveURL('x/y', 'z')).toBe 'x/z'
@@ -12,3 +12,6 @@ xdescribe 'resolveURL()', ->
 
   it 'should resolve relative segments', ->
     expect(uri.resolveURL('a/b/c', '../x')).toBe 'a/x'
+
+  it 'should resolve fully-qualified URIs', ->
+    expect(uri.resolveURL('//site.com/a/b/c', 'x/y')).toBe '//site.com/a/b/x/y'
