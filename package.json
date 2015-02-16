@@ -15,5 +15,8 @@
     "jayschema": "^0.3.1",
     "tv4": "^1.1.9",
     "z-schema": "^3.4.3"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org"
   }
 }
