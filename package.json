@@ -1,6 +1,6 @@
 {
   "name": "deref",
-  "version": "0.2.8",
+  "version": "0.2.7",
   "description": "JSON-Schema $ref resolution",
   "main": "lib/index.js",
   "repository": {
@@ -15,8 +15,5 @@
     "jayschema": "^0.3.1",
     "tv4": "^1.1.9",
     "z-schema": "^3.4.3"
-  },
-  "publishConfig": {
-    "registry": "http://registry.npmjs.org"
   }
 }
