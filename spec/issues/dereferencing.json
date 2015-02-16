@@ -1,0 +1,20 @@
+[
+  {
+    "description": "using relative URIs as id",
+    "schemas": [
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "id": "foo/bar"
+      }
+    ],
+    "tests": [
+      {
+        "description": "should resolve correctly",
+        "schema": "schemas.0",
+        "hasProps": {
+          "id": "http://json-schema.org/draft-04/foo/bar#"
+        }
+      }
+    ]
+  }
+]
