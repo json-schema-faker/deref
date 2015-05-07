@@ -1,3 +1,4 @@
+
 Do you have $ref's ?
 ====================
 
@@ -70,6 +71,18 @@ console.log(deref.util.normalizeSchema(schema).schema2.nested.id);
 // output: http://x.y.z/otherschema.json#bar
 ```
 
+Schema identity
+---------------
+
+Since `0.3.0` the schema `id` will always be normalized internally to `#` when it's not provided.
+
+This way the passed schema can be self-referenced using `$ref`'s which is the expected behavior.
+
+I know the `id` keyword is not required but while `#/` is a self-reference we can assume `#` as the schema-id.
+
+`deref` use that `ìd` for store and find `$ref`'s, even self-references.
+
+Without it is complex determine what to resolve.
 
 Basic usage
 ===========
@@ -134,7 +147,5 @@ Aside the basics of `$`, this function will include:
 Any `refs` passed MUST be an object of normalized schemas.
 
 Note that calling `$(schema)` will not read/download any local/remote files.
-
-Since `0.2.1` the `$schema` and `id` are no longer required for schema normalization.
 
 [![Build Status](https://travis-ci.org/gextech/deref.png?branch=master)](https://travis-ci.org/gextech/deref) [![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref) [![Coverage Status](https://coveralls.io/repos/gextech/deref/badge.png?branch=master)](https://coveralls.io/r/gextech/deref?branch=master)
