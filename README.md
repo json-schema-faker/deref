@@ -80,9 +80,9 @@ This way the passed schema can be self-referenced using `$ref`'s which is the ex
 
 I know the `id` keyword is not required but while `#/` is a self-reference we can assume `#` as the schema-id.
 
-`deref` use that `ìd` for store and find `$ref`'s, even self-references.
+`deref` use that `id` for store and find `$ref`'s, even self-references.
 
-Without it is complex determine what to resolve.
+Without it is complex determine what to resolve. :beers:
 
 Basic usage
 ===========
