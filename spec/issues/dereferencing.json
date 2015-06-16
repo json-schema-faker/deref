@@ -16,5 +16,22 @@
         }
       }
     ]
+  },
+  {
+    "description": "using ./ in the URI",
+    "schemas": [
+      {
+        "id": "./here"
+      }
+    ],
+    "tests": [
+      {
+        "description": "should normalize correctly",
+        "schema": "schemas.0",
+        "hasProps": {
+          "id": "http://json-schema.org/here#"
+        }
+      }
+    ]
   }
 ]
