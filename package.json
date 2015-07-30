@@ -3,6 +3,7 @@
   "version": "0.3.0",
   "description": "JSON-Schema $ref resolution",
   "main": "lib/index.js",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/gextech/deref"
