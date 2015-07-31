@@ -1,3 +1,5 @@
+require('./helpers')
+
 fs = require('fs')
 glob = require('glob')
 deref = require('../lib')
