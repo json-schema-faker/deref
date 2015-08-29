@@ -2,6 +2,8 @@
 Do you have $ref's ?
 ====================
 
+[![Build Status](https://travis-ci.org/json-schema-faker/deref.png?branch=master)](https://travis-ci.org/json-schema-faker/deref) [![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref) [![Coverage Status](https://coveralls.io/repos/json-schema-faker/deref/badge.png?branch=master)](https://coveralls.io/r/json-schema-faker/deref?branch=master)
+
 A simple way for solving `$ref` values:
 
 ```javascript
@@ -147,5 +149,3 @@ Aside the basics of `$`, this function will include:
 Any `refs` passed MUST be an object of normalized schemas.
 
 Note that calling `$(schema)` will not read/download any local/remote files.
-
-[![Build Status](https://travis-ci.org/pateketrueke/deref.png?branch=master)](https://travis-ci.org/pateketrueke/deref) [![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref) [![Coverage Status](https://coveralls.io/repos/pateketrueke/deref/badge.png?branch=master)](https://coveralls.io/r/pateketrueke/deref?branch=master)
