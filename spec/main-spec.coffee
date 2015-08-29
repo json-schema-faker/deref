@@ -12,9 +12,9 @@ pick = (obj, key) ->
 specFilter = require('grunt').cli.options.spec or ''
 
 glob.sync("#{__dirname}/**/*.json").forEach (file) ->
-  JSON.parse(fs.readFileSync(file)).forEach (suite) ->
-    return if file.indexOf(specFilter) is -1
+  return if file.indexOf(specFilter) is -1
 
+  JSON.parse(fs.readFileSync(file)).forEach (suite) ->
     describe "#{suite.description} (#{file.replace(__dirname + '/', '')})", ->
       suite.tests.forEach (test) ->
         it test.description, ->
