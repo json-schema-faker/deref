@@ -1,7 +1,7 @@
 tv4 = require('tv4')
 clone = require('clone')
-ZSchema = require('z-schema')
 JaySchema = require('jayschema')
+isMyJSONValid = require('is-my-json-valid')
 
 refCount = (node, acc = 0) ->
   acc += 1 if node.$ref
@@ -19,33 +19,25 @@ jasmine.Matchers::toHaveRefs = (expected = 0) ->
   true
 
 jasmine.Matchers::toHaveSchema = (expected, refs) ->
-  # TODO: try other validators
+  validate = isMyJSONValid(expected)
 
-  validator = new ZSchema
-    ignoreUnresolvableReferences: false
-
-  validator.setRemoteReference(id, clone(json)) for id, json of refs
-
-  valid = validator.validate @actual, clone(expected)
-
-  if errors = validator.getLastErrors() or not valid
-    throw errors.map((e) ->
-      if e.code is 'PARENT_SCHEMA_VALIDATION_FAILED'
-        e.inner.map((e) -> e.message).join '\n'
-      else
-        e.message
-    ).join('\n') or "Invalid schema #{JSON.stringify @actual}"
+  unless validate(@actual)
+    throw new Error validate.errors
+      .map((e) -> e.desc or e.message)
+      .join('\n')
 
   api = tv4.freshApi()
 
-  api.cyclicCheck = false;
-  api.banUnknown = false;
+  api.banUnknown = false
+  api.cyclicCheck = false
 
   api.addSchema(id, json) for id, json of refs
 
-  result = api.validateResult(@actual, clone(expected), api.cyclicCheck, api.banUnknown)
+  result = api.validateResult @actual,
+    clone(expected), api.cyclicCheck, api.banUnknown
 
-  throw 'Missing ' + result.missing.join(', ') if result.missing.length
+  if result.missing.length
+    throw new Error 'Missing ' + result.missing.join(', ')
 
   throw result.error if result.error
 
@@ -54,6 +46,7 @@ jasmine.Matchers::toHaveSchema = (expected, refs) ->
 
   result = jay.validate @actual, clone(expected)
 
-  throw result.map((e) -> e.desc or e.message).join('\n') or "Invalid schema #{JSON.stringify @actual}" if result.length
+  throw result.map((e) -> e.desc or e.message).join('\n') or
+    "Invalid schema #{JSON.stringify @actual}" if result.length
 
   true
