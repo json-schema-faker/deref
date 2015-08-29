@@ -6,8 +6,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pateketrueke/deref"
+    "url": "https://github.com/json-schema-faker/deref"
   },
+  "license": "MIT",
   "devDependencies": {
     "clone": "^0.1.19",
     "glob": "^4.5.3",
