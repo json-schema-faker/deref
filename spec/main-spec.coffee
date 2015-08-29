@@ -9,8 +9,12 @@ pick = (obj, key) ->
   obj = obj[parts.shift()] while parts.length
   obj
 
+specFilter = require('grunt').cli.options.spec or ''
+
 glob.sync("#{__dirname}/**/*.json").forEach (file) ->
   JSON.parse(fs.readFileSync(file)).forEach (suite) ->
+    return if file.indexOf(specFilter) is -1
+
     describe "#{suite.description} (#{file.replace(__dirname + '/', '')})", ->
       suite.tests.forEach (test) ->
         it test.description, ->
@@ -30,7 +34,7 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
           if test.normalize
             backup = JSON.stringify(schema)
             data = try
-              deref.util.normalizeSchema(test.root, schema)
+              deref.util.normalizeSchema(schema)
             catch e
               unless test.throws
                 console.log e
@@ -39,7 +43,7 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
             expect(backup).toBe JSON.stringify(schema)
           else
             data = try
-              $(test.root, schema, refs, test.expand)
+              $(schema, refs, test.expand)
             catch e
               {}
 
