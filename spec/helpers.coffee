@@ -19,7 +19,7 @@ jasmine.Matchers::toHaveRefs = (expected = 0) ->
   true
 
 jasmine.Matchers::toHaveSchema = (expected, refs) ->
-  validate = isMyJSONValid(expected)
+  validate = isMyJSONValid(expected, schemas: refs)
 
   unless validate(@actual)
     throw new Error validate.errors
