@@ -271,14 +271,13 @@
         "description": "should pass the json-schema (draft-04) spec",
         "schema": "schemas.3",
         "refs": ["schemas.2", "schemas.1", "schemas.0"],
-        "root": "http://json-schema.org/draft-04/schema#",
         "data": {
           "firstName": "John",
           "lastName": "Doe",
           "street": "5th avenue",
           "city": "L.A. U.S.A."
         },
-        "hasRefs": 3
+        "hasRefs": 1
       },
       {
         "description": "should fail on unsupported versions",

@@ -1,0 +1,46 @@
+[
+  {
+    "description": "using self-references",
+    "tests": [
+      {
+        "description": "should resolve inline references",
+        "schema": {
+          "type": "object",
+          "required": ["all", "self"],
+          "properties": {
+            "all": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/self"
+              }
+            },
+            "self": {
+              "anyOf": [
+                { "$ref": "#" },
+                { "type": "null" }
+              ]
+            }
+          },
+          "definitions": {
+            "self": {
+              "type": "array",
+              "items": {
+                "$ref": "#"
+              }
+            }
+          }
+        },
+        "data": {
+          "all": [],
+          "self": {
+            "all": [],
+            "self": {
+              "all": [],
+              "self": null
+            }
+          }
+        }
+      }
+    ]
+  }
+]

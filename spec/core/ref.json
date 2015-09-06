@@ -30,6 +30,7 @@
         "description": "should normalize all references only",
         "schema": "schemas.2",
         "refs": ["schemas.1", "schemas.0"],
+        "normalize": true,
         "hasRefs": 1,
         "hasProps": {
           "props.$ref": "http://json-schema.org/a#"
@@ -39,7 +40,6 @@
         "description": "should perform full dereferencing",
         "schema": "schemas.2",
         "refs": ["schemas.1", "schemas.0"],
-        "expand": true,
         "hasRefs": 0,
         "hasProps": {
           "props.b.key": "b-ref"
