@@ -1,0 +1,91 @@
+[
+  {
+    "description": "schema combinations",
+    "schemas": [
+      {
+        "type": "object",
+        "properties": {
+          "num": {
+            "oneOf": [
+              { "$ref": "#/definitions/one" },
+              { "$ref": "#/definitions/two" }
+            ]
+          }
+        },
+        "definitions": {
+          "one": 1,
+          "two": 2
+        }
+      },
+      {
+        "type": "object",
+        "properties": {
+          "num": {
+            "anyOf": [
+              { "$ref": "#/definitions/one" },
+              { "$ref": "#/definitions/two" }
+            ]
+          }
+        },
+        "definitions": {
+          "one": 1,
+          "two": 2
+        }
+      },
+      {
+        "type": "object",
+        "properties": {
+          "num": {
+            "allOf": [
+              { "$ref": "#/definitions/one" },
+              { "$ref": "#/definitions/two" }
+            ]
+          }
+        },
+        "definitions": {
+          "one": { "x": "y" },
+          "two": { "a": "b" }
+        }
+      }
+    ],
+    "tests": [
+      {
+        "description": "should reduce oneOf",
+        "schema": "schemas.0",
+        "hasRefs": 1
+      },
+      {
+        "description": "should resolve oneOf (expand)",
+        "schema": "schemas.0",
+        "hasRefs": 0,
+        "expand": 1
+      },
+      {
+        "description": "should reduce anyOf",
+        "schema": "schemas.1",
+        "hasRefs": 1
+      },
+      {
+        "description": "should resolve anyOf (expand)",
+        "schema": "schemas.1",
+        "hasRefs": 0,
+        "expand": 1
+      },
+      {
+        "description": "should reduce allOf",
+        "schema": "schemas.2",
+        "hasRefs": 2
+      },
+      {
+        "description": "should resolve allOf (expand)",
+        "schema": "schemas.2",
+        "hasRefs": 0,
+        "expand": 1,
+        "hasProps": {
+          "properties.num.x": "y",
+          "properties.num.a": "b"
+        }
+      }
+    ]
+  }
+]
