@@ -15,8 +15,12 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
   return if file.indexOf(specFilter) is -1
 
   JSON.parse(fs.readFileSync(file)).forEach (suite) ->
+    return if suite.xdescription
+
     describe "#{suite.description} (#{file.replace(__dirname + '/', '')})", ->
       suite.tests.forEach (test) ->
+        return if test.xdescription
+
         it test.description, ->
           $ = deref()
 
@@ -43,7 +47,7 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
             expect(backup).toBe JSON.stringify(schema)
           else
             data = try
-              $(schema, refs)
+              $(schema, refs, test.expand)
             catch e
               {}
 
