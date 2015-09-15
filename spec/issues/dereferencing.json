@@ -50,14 +50,8 @@
     ],
     "tests": [
       {
-        "description": "leave inner $ref as-is",
+        "description": "try to resolve all found $refs",
         "schema": "schemas.0",
-        "hasRefs": 1
-      },
-      {
-        "description": "resolve inner $ref (expand)",
-        "schema": "schemas.0",
-        "expand": true,
         "hasRefs": 0,
         "hasProps": {
           "properties.prop.enum.0": "bar"

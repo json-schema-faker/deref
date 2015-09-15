@@ -30,7 +30,7 @@
             }
           }
         },
-        "xdata": {
+        "data": {
           "all": [],
           "self": {
             "all": [],
@@ -40,8 +40,7 @@
             }
           }
         },
-        "hasRefs": 3,
-        "expand": true
+        "hasRefs": 3
       }
     ]
   }

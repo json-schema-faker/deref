@@ -5,85 +5,103 @@
       {
         "type": "object",
         "properties": {
-          "num": {
+          "foo": {
             "oneOf": [
-              { "$ref": "#/definitions/one" },
-              { "$ref": "#/definitions/two" }
+              { "$ref": "#/definitions/x" },
+              { "$ref": "#/definitions/y" }
             ]
           }
         },
         "definitions": {
-          "one": 1,
-          "two": 2
-        }
+          "x": { "type": "string" },
+          "y": { "type": "number" }
+        },
+        "required": ["foo"]
       },
       {
         "type": "object",
         "properties": {
-          "num": {
+          "bar": {
             "anyOf": [
-              { "$ref": "#/definitions/one" },
-              { "$ref": "#/definitions/two" }
+              { "$ref": "#/definitions/m" },
+              { "$ref": "#/definitions/n" }
             ]
           }
         },
         "definitions": {
-          "one": 1,
-          "two": 2
-        }
+          "m": { "type": "boolean" },
+          "n": { "type": "array" }
+        },
+        "required": ["bar"]
       },
       {
         "type": "object",
         "properties": {
-          "num": {
+          "baz": {
             "allOf": [
-              { "$ref": "#/definitions/one" },
-              { "$ref": "#/definitions/two" }
+              { "$ref": "#/definitions/j" },
+              { "$ref": "#/definitions/k" }
             ]
           }
         },
         "definitions": {
-          "one": { "x": "y" },
-          "two": { "a": "b" }
-        }
+          "j": { "type": "string" },
+          "k": { "minLength": 10 }
+        },
+        "required": ["baz"]
       }
     ],
     "tests": [
       {
         "description": "should reduce oneOf",
         "schema": "schemas.0",
-        "hasRefs": 1
+        "data": { "foo": "y" },
+        "hasRefs": 0,
+        "hasProps": {
+          "properties.foo.oneOf.0.type": "string"
+        }
       },
       {
-        "description": "should resolve oneOf (expand)",
+        "description": "should resolve oneOf",
         "schema": "schemas.0",
         "hasRefs": 0,
-        "expand": 1
+        "hasProps": {
+          "properties.foo.oneOf.1.type": "number"
+        }
       },
       {
         "description": "should reduce anyOf",
         "schema": "schemas.1",
-        "hasRefs": 1
+        "data": { "bar": [] },
+        "hasRefs": 0,
+        "hasProps": {
+          "properties.bar.anyOf.0.type": "boolean"
+        }
       },
       {
-        "description": "should resolve anyOf (expand)",
+        "description": "should resolve anyOf",
         "schema": "schemas.1",
         "hasRefs": 0,
-        "expand": 1
+        "hasProps": {
+          "properties.bar.anyOf.1.type": "array"
+        }
       },
       {
         "description": "should reduce allOf",
         "schema": "schemas.2",
-        "hasRefs": 2
+        "data": { "baz": "0123456789" },
+        "hasRefs": 0,
+        "hasProps": {
+          "properties.baz.allOf.0.type": "string"
+        }
       },
       {
-        "description": "should resolve allOf (expand)",
+        "description": "should resolve allOf",
         "schema": "schemas.2",
         "hasRefs": 0,
-        "expand": 1,
+        "resolve": true,
         "hasProps": {
-          "properties.num.x": "y",
-          "properties.num.a": "b"
+          "properties.baz.minLength": 10
         }
       }
     ]
