@@ -47,7 +47,7 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
             expect(backup).toBe JSON.stringify(schema)
           else
             data = try
-              $(schema, refs, test.expand)
+              $(schema, refs, test.resolve)
             catch e
               {}
 
