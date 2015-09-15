@@ -277,7 +277,8 @@
           "street": "5th avenue",
           "city": "L.A. U.S.A."
         },
-        "hasRefs": 1
+        "expand": true,
+        "hasRefs": 0
       },
       {
         "description": "should fail on unsupported versions",
