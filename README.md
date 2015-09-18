@@ -116,6 +116,10 @@ The resulting function of calling `deref()` can accept three arguments:
 
   Whether do full dereferencing or not, `false` by default.
 
+  Since `0.6.0` all inner references are not dereferenced by default.
+
+  All other references are always dereferenced regardless the value of `ex`.
+
 Examples
 --------
 
