@@ -32,6 +32,7 @@
       {
         "description": "should resolve sub-schema id",
         "schema": "schemas.0",
+        "resolve": true,
         "data": {
           "prop": "y"
         }
