@@ -1,5 +1,6 @@
 tv4 = require('tv4')
 clone = require('clone')
+ZSchema = require('z-schema')
 JaySchema = require('jayschema')
 isMyJSONValid = require('is-my-json-valid')
 
@@ -25,6 +26,20 @@ jasmine.Matchers::toHaveSchema = (expected, refs) ->
     throw new Error validate.errors
       .map((e) -> e.desc or e.message)
       .join('\n')
+
+  validator = new ZSchema
+    ignoreUnresolvableReferences: false
+
+  validator.setRemoteReference(k, v) for k, v of refs
+  valid = validator.validate @actual, clone(expected)
+
+  if errors = validator.getLastErrors() or not valid
+    throw errors.map((e) ->
+      if e.code is 'PARENT_SCHEMA_VALIDATION_FAILED'
+        e.inner.map((e) -> e.message).join '\n'
+      else
+        e.message
+    ).join('\n') or "Invalid schema #{JSON.stringify @actual}"
 
   api = tv4.freshApi()
 

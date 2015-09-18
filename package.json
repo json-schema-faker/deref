@@ -15,7 +15,8 @@
     "grunt-parts": "^0.5.7",
     "is-my-json-valid": "^2.12.2",
     "jayschema": "^0.3.1",
-    "tv4": "^1.2.7"
+    "tv4": "^1.2.7",
+    "z-schema": "^3.15.2"
   },
   "dependencies": {
     "deep-extend": "^0.4.0"
