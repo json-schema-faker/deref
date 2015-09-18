@@ -52,6 +52,7 @@
       {
         "description": "try to resolve all found $refs",
         "schema": "schemas.0",
+        "resolve": true,
         "hasRefs": 0,
         "hasProps": {
           "properties.prop.enum.0": "bar"
