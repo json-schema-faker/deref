@@ -153,3 +153,7 @@ Aside the basics of `$`, this function will include:
 Any `refs` passed MUST be an object of normalized schemas.
 
 Note that calling `$(schema)` will not read/download any local/remote files.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/json-schema-faker/deref/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
