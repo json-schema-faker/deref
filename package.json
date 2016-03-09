@@ -23,7 +23,7 @@
     "glob": "^4.5.3",
     "is-my-json-valid": "^2.13.1",
     "istanbul": "^0.4.2",
-    "jasmine-node": "^2.0.0-beta4",
+    "jasmine-node": "2.0.0-beta4",
     "jayschema": "^0.3.1",
     "tv4": "^1.2.7",
     "z-schema": "^3.15.4"
