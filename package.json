@@ -8,12 +8,22 @@
     "url": "https://github.com/json-schema-faker/deref"
   },
   "license": "MIT",
+  "scripts": {
+    "dev": "jasmine-node spec --coffee --verbose --autoTest --watchFolders lib",
+    "dev:lint": "eslint lib",
+    "dev:spec": "jasmine-node spec --coffee --noStackTrace --captureExceptions",
+    "cover": "istanbul cover --root lib --x '**/spec/**' -- jasmine-node --coffee --spec",
+    "cover:up": "codecov --file=coverage/lcov.info --disable=gcov -e TRAVIS_NODE_VERSION",
+    "test": "npm run dev:lint && npm run dev:spec"
+  },
   "devDependencies": {
     "clone": "^0.1.19",
+    "codecov": "^1.0.1",
+    "eslint": "^2.3.0",
     "glob": "^4.5.3",
-    "grunt": "^0.4.5",
-    "grunt-parts": "^0.5.7",
-    "is-my-json-valid": "^2.12.2",
+    "is-my-json-valid": "^2.13.1",
+    "istanbul": "^0.4.2",
+    "jasmine-node": "^2.0.0-beta4",
     "jayschema": "^0.3.1",
     "tv4": "^1.2.7",
     "z-schema": "^3.15.4"
