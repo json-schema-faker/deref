@@ -2,7 +2,9 @@
 Do you have $ref's ?
 ====================
 
-[![Build Status](https://travis-ci.org/json-schema-faker/deref.png?branch=master)](https://travis-ci.org/json-schema-faker/deref) [![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref) [![Coverage Status](https://coveralls.io/repos/json-schema-faker/deref/badge.png?branch=master)](https://coveralls.io/r/json-schema-faker/deref?branch=master)
+[![Build Status](https://travis-ci.org/json-schema-faker/deref.png?branch=master)](https://travis-ci.org/json-schema-faker/deref)
+[![NPM version](https://badge.fury.io/js/deref.png)](http://badge.fury.io/js/deref)
+[![Coverage Status](https://codecov.io/github/json-schema-faker/deref/coverage.svg)](https://codecov.io/github/json-schema-faker/deref)
 
 A simple way for solving `$ref` values:
 
