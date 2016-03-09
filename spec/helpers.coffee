@@ -36,9 +36,7 @@ global.customMatchers =
       validate = isMyJSONValid(expected, schemas: refs)
 
       unless validate(actual)
-        fail.push validate.errors
-          .map((e) -> e.desc or e.message)
-          .join('\n')
+        fail.push validate.errors.map((e) -> e.desc or e.message).join('\n')
 
       # z-schema
       validator = new ZSchema
