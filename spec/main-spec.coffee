@@ -1,5 +1,3 @@
-require('./helpers')
-
 fs = require('fs')
 glob = require('glob')
 deref = require('../lib')
@@ -9,15 +7,14 @@ pick = (obj, key) ->
   obj = obj[parts.shift()] while parts.length
   obj
 
-specFilter = require('grunt').cli.options.spec or ''
-
 glob.sync("#{__dirname}/**/*.json").forEach (file) ->
-  return if file.indexOf(specFilter) is -1
-
   JSON.parse(fs.readFileSync(file)).forEach (suite) ->
     return if suite.xdescription
 
     describe "#{suite.description} (#{file.replace(__dirname + '/', '')})", ->
+      beforeEach ->
+        jasmine.addMatchers(customMatchers)
+
       suite.tests.forEach (test) ->
         return if test.xdescription
 
@@ -57,7 +54,7 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
 
           if test.data
             try
-              expect(test.data).toHaveSchema data, $.refs
+              expect(test.data).toHaveSchema [data, $.refs]
             catch e
               unless test.throws
                 console.log JSON.stringify(data, null, 2)
