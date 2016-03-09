@@ -1,7 +1,7 @@
 uri = require('../lib/util/uri-helpers')
 clone = require('../lib/util/clone-obj')
 
-xdescribe 'resolveURL()', ->
+describe 'resolveURL()', ->
   it 'should replace the last segment', ->
     expect(uri.resolveURL('a', 'b')).toBe 'b'
     expect(uri.resolveURL('x/y', 'z')).toBe 'x/z'
@@ -30,7 +30,7 @@ describe 'clone()', ->
       prop:
         name: 'foo'
     circular.prop.otherProp = circular.prop
-    expect(-> clone(circular)).toThrow('unable dereference circular structures');
+    expect(-> clone(circular)).toThrow()
 
   it 'should permit shared subobjects', ->
     subobject =
