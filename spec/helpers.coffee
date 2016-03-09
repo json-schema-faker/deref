@@ -27,10 +27,6 @@ global.customMatchers =
       [ expected, refs ] = expected if Array.isArray(expected)
 
       fail = []
-      fixed = {}
-
-      if refs
-        fixed[s.id.split('#')[0]] = clone(s) for s in refs
 
       # is-my-json-valid
       validate = isMyJSONValid(expected, schemas: refs)
@@ -42,7 +38,7 @@ global.customMatchers =
       validator = new ZSchema
         ignoreUnresolvableReferences: false
 
-      validator.setRemoteReference(k, v) for k, v of fixed
+      validator.setRemoteReference(k, clone(v)) for k, v of refs
       valid = validator.validate actual, clone(expected)
 
       if errors = validator.getLastErrors() or not valid
@@ -59,7 +55,7 @@ global.customMatchers =
       api.banUnknown = false
       api.cyclicCheck = false
 
-      api.addSchema(id, json) for id, json of fixed
+      api.addSchema(id, clone(json)) for id, json of refs
 
       result = api.validateResult actual,
         clone(expected), api.cyclicCheck, api.banUnknown
@@ -71,7 +67,7 @@ global.customMatchers =
 
       # jayschema
       jay = new JaySchema
-      jay.register(clone(json)) for id, json of fixed
+      jay.register(clone(json)) for id, json of refs
 
       result = jay.validate actual, clone(expected)
 
