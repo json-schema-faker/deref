@@ -32,6 +32,8 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
             else
               ref
 
+          error = null
+
           if test.normalize
             backup = JSON.stringify(schema)
             data = try
@@ -46,10 +48,12 @@ glob.sync("#{__dirname}/**/*.json").forEach (file) ->
             data = try
               $(schema, refs, test.resolve)
             catch e
+              error = e
               {}
 
           if test.dump
             console.log JSON.stringify(data, null, 2)
+            console.log(error.stack) if error
             return
 
           if test.data
