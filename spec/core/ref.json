@@ -37,13 +37,23 @@
         }
       },
       {
-        "description": "should perform full dereferencing",
+        "description": "should skip dereferencing if resolve is not true",
+        "schema": "schemas.2",
+        "refs": ["schemas.1", "schemas.0"],
+        "hasRefs": 1,
+        "hasProps": {
+          "props.$ref": "http://json-schema.org/a#"
+        }
+      },
+      {
+        "description": "should perform full-dereferencing if resolve is true",
         "schema": "schemas.2",
         "refs": ["schemas.1", "schemas.0"],
         "hasRefs": 0,
         "hasProps": {
           "props.b.key": "b-ref"
-        }
+        },
+        "resolve": true
       },
       {
         "description": "should get references by its id",

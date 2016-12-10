@@ -1,4 +1,4 @@
-uri = require('../lib/util/uri-helpers')
+uri = require('../lib/util/helpers')
 clone = require('../lib/util/clone-obj')
 
 describe 'resolveURL()', ->
