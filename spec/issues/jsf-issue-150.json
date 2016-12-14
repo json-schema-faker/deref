@@ -1,0 +1,582 @@
+[
+  {
+    "description": "some keywords wasn't covered properly",
+    "tests": [
+      {
+        "description": "should skip default properties and `null` values",
+        "schema": {
+          "$schema": "",
+          "title": "J5 Input Schema",
+          "description": "JSON input for the \"round trip\" JSON j5",
+          "type": "object",
+          "properties": {
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "MASTER_OLIGO_NUMBER_OF_DIGITS": {
+                  "description": "The default number of digits used to number an oligo; e.g. j5_00001_primer_description uses 5 digits",
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 5
+                },
+                "MASTER_PLASMID_NUMBER_OF_DIGITS": {
+                  "description": "The default number of digits used to number a plasmid; e.g. pj5_00001 uses 5 digits",
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 5
+                },
+                "GIBSON_OVERLAP_BPS": {
+                  "description": "The minimum number of bps for SLIC/Gibson/CPEC overlaps (should be an even number); this is also the starting design length for the annealing portion of primers",
+                  "type": "integer",
+                  "default": 26
+                },
+                "GIBSON_OVERLAP_MIN_TM": {
+                  "description": "The minimum desired Tm for SLIC/Gibson/CPEC overlaps",
+                  "type": "number",
+                  "default": 60
+                },
+                "GIBSON_OVERLAP_MAX_TM": {
+                  "description": "The maximum desired Tm for SLIC/Gibson/CPEC overlaps",
+                  "type": "number",
+                  "default": 70
+                },
+                "MAXIMUM_OLIGO_LENGTH_BPS": {
+                  "description": "The maximum oligo length to be ordered",
+                  "type": "integer",
+                  "default": 110
+                },
+                "MINIMUM_FRAGMENT_SIZE_GIBSON_BPS": {
+                  "description": "The minimum fragment size for SLIC/Gibson assembly",
+                  "type": "integer",
+                  "default": 250
+                },
+                "GOLDEN_GATE_OVERHANG_BPS": {
+                  "description": "The number of bps of the overhang resulting from the Golden-gate type IIs endonuclease digestion",
+                  "type": "integer",
+                  "default": 4
+                },
+                "GOLDEN_GATE_RECOGNITION_SEQ": {
+                  "description": "The Golden-gate type IIs endonuclease recognition site sequence",
+                  "type": "string",
+                  "default": "GGTCTC"
+                },
+                "GOLDEN_GATE_TERMINI_EXTRA_SEQ": {
+                  "description": "The extra 5' sequence required at each end of a Golden-gate assembly piece; e.g. NNNNNNNGGCTCTN for BsaI (Eco31I)",
+                  "type": "string",
+                  "default": "CACACCAGGTCTCA"
+                },
+                "MAXIMUM_IDENTITIES_GOLDEN_GATE_OVERHANGS_COMPATIBLE": {
+                  "description": "The maximum number of tolerable non-gapped aligned identities between compatible overhang sequences for Golden-gate assembly",
+                  "type": "number",
+                  "default": 2
+                },
+                "OLIGO_SYNTHESIS_COST_PER_BP_USD": {
+                  "description": "The oligo synthesis cost per bp ($US)",
+                  "type": "number",
+                  "default": 0.1
+                },
+                "OLIGO_PAGE_PURIFICATION_COST_PER_PIECE_USD": {
+                  "description": "The PAGE-purification cost per oligo ($US)",
+                  "type": "number",
+                  "default": 40
+                },
+                "OLIGO_MAX_LENGTH_NO_PAGE_PURIFICATION_REQUIRED_BPS": {
+                  "description": "The maximum oligo length that does not require PAGE-purification",
+                  "type": "number",
+                  "default": 60
+                },
+                "MINIMUM_PCR_PRODUCT_BPS": {
+                  "description": "The minimum PCR product size",
+                  "type": "number",
+                  "default": 100
+                },
+                "DIRECT_SYNTHESIS_COST_PER_BP_USD": {
+                  "description": "The cost per bp to do direct synthesis ($US)",
+                  "type": "number",
+                  "default": 0.39
+                },
+                "DIRECT_SYNTHESIS_MINIUMUM_COST_PER_PIECE_USD": {
+                  "description": "The minimum cost of synthesis per piece ($US)",
+                  "type": "number",
+                  "default": 159
+                },
+                "PRIMER_GC_CLAMP": {
+                  "description": "Primer3 parameter: length of the desired GC clamp (Primer3 default is 0)",
+                  "type": "number",
+                  "default": 2
+                },
+                "PRIMER_MIN_SIZE": {
+                  "description": "Primer3 parameter: the minimum length of a primer (Primer3 default is 18)",
+                  "type": "number",
+                  "default": 18
+                },
+                "PRIMER_MAX_SIZE": {
+                  "description": "Primer3 parameter: the maximum length of a primer (Primer3 default is 27; maximum is 36)",
+                  "type": "number",
+                  "default": 36
+                },
+                "PRIMER_MIN_TM": {
+                  "description": "Primer3 parameter: the minimum primer Tm (Primer3 default is 57)",
+                  "type": "number",
+                  "default": 60
+                },
+                "PRIMER_MAX_TM": {
+                  "description": "Primer3 parameter: the maximum primer Tm (Primer3 default is 63)",
+                  "type": "number",
+                  "default": 70
+                },
+                "PRIMER_MAX_DIFF_TM": {
+                  "description": "Primer3 parameter: the maximum primer pair difference in Tm (Primer3 default is 100)",
+                  "type": "number",
+                  "default": 5
+                },
+                "PRIMER_MAX_SELF_ANY_TH": {
+                  "description": "Primer3 parameter: the maximum primer self complementarity (Primer3 default is 47)",
+                  "type": "number",
+                  "default": 47
+                },
+                "PRIMER_MAX_SELF_END_TH": {
+                  "description": "Primer3 parameter: the maximum primer self end complementarity (Primer3 default is 47)",
+                  "type": "number",
+                  "default": 47
+                },
+                "PRIMER_PAIR_MAX_COMPL_ANY_TH": {
+                  "description": "Primer3 parameter: the maximum primer pair complementarity (Primer3 default is 47)",
+                  "type": "number",
+                  "default": 47
+                },
+                "PRIMER_PAIR_MAX_COMPL_END_TH": {
+                  "description": "Primer3 parameter: the maximum primer pair end complementarity (Primer3 default is 47)",
+                  "type": "number",
+                  "default": 47
+                },
+                "PRIMER_TM_SANTALUCIA": {
+                  "description": "Primer3 parameter: use the Santalucia formula for calculating Tms ( (Primer3 default is false)",
+                  "type": "boolean",
+                  "default": true
+                },
+                "PRIMER_SALT_CORRECTIONS": {
+                  "description": "Primer3 parameter: use the salt correction formula for calculating Tms ( (Primer3 default is false)",
+                  "type": "boolean",
+                  "default": true
+                },
+                "PRIMER_DNA_CONC": {
+                  "description": "Primer3 parameter: DNA concentration to use when calculating Tms in micromolar (IDT uses 250; Primer3 default is 50)",
+                  "type": "number",
+                  "default": 250
+                },
+                "MISPRIMING_3PRIME_BOUNDARY_BP_TO_WARN_IF_HIT": {
+                  "description": "Only warn of mispriming if the BLAST hit between the primer and the template contains the 3' end of the primer (within this number of bp)",
+                  "type": "number",
+                  "default": 4
+                },
+                "MISPRIMING_MIN_TM": {
+                  "description": "The minimum approximate Tm to consider a significant mispriming event",
+                  "type": "number",
+                  "default": 45
+                },
+                "MISPRIMING_SALT_CONC": {
+                  "description": "The salt concentration used when estimating the mispriming Tm in Molar",
+                  "type": "number",
+                  "default": 0.05
+                },
+                "MISPRIMING_OLIGO_CONC": {
+                  "description": "The oligo concentration used when estimating the mispriming Tm in Molar",
+                  "type": "number",
+                  "default": 2.5e-07
+                },
+                "OUTPUT_SEQUENCE_FORMAT": {
+                  "description": "The output sequence file format. Options are: \"Genbank\", \"FASTA\", \"jbei-seq\", or \"SBOLXML\"",
+                  "enum": [
+                    "Genbank",
+                    "FASTA",
+                    "jbei-seq",
+                    "SBOLXML"
+                  ],
+                  "default": "Genbank"
+                },
+                "ASSEMBLY_PRODUCT_TYPE": {
+                  "description": "Determines whether the assembled DNA product will be circular or linear. Options are: \"circular\" or \"linear\"",
+                  "enum": [
+                    "circular",
+                    "linear"
+                  ],
+                  "default": "circular"
+                },
+                "SUPPRESS_PURE_PRIMERS": {
+                  "description": "Suppress the output of pure primers. Options are: \"TRUE\" or \"FALSE\"",
+                  "type": "boolean",
+                  "default": true
+                },
+                "SUPPRESS_PRIMER_ANNOTATIONS": {
+                  "description": "Suppress primer annotations. Options are: \"TRUE\" or \"FALSE\"",
+                  "type": "boolean",
+                  "default": false
+                },
+                "HOMOLOGY_MIN_LENGTH_BPS": {
+                  "description": "The minimum length in bps for a homologous sequence repeat to be considered significant",
+                  "type": "number",
+                  "default": 26
+                },
+                "HOMOLOGY_MAX_FRACTION_MISMATCHES": {
+                  "description": "The maximum fraction of mismatches for a homologous sequence repeat to be considered significant",
+                  "type": "number",
+                  "default": 0.05
+                },
+                "APPEND_UUID_TO_PLASMID_OLIGO_AND_SYNTHESIS_NAME": {
+                  "description": "Append UUIDs to all new plasmid, oligo, and DNA synthesis names. Options are: true or false",
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            },
+            "sequences": {
+              "description": "A map from sequence id to sequence JSON",
+              "type": "object",
+              "additionalProperties": {
+                "required": [
+                  "id",
+                  "sequence"
+                ],
+                "description": "A sequence JSON",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "Unique sequence id",
+                    "type": "string"
+                  },
+                  "sequence": {
+                    "description": "The nucleotide sequence",
+                    "type": "string"
+                  },
+                  "circular": {
+                    "description": "True if the sequence is circular, false if the sequence is linear",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "name": {
+                    "description": "The name of the sequence",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "features": {
+                    "description": "An array of sequence features",
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                      "required": [
+                        "start",
+                        "end"
+                      ],
+                      "description": "A sequence feature",
+                      "type": "object",
+                      "properties": {
+                        "start": {
+                          "type": "integer"
+                        },
+                        "end": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "description": "The name of the feature",
+                          "type": "string",
+                          "default": ""
+                        },
+                        "type": {
+                          "type": "string",
+                          "default": null
+                        },
+                        "id": {
+                          "type": "string",
+                          "default": null
+                        },
+                        "strand": {
+                          "enum": [
+                            0,
+                            1
+                          ],
+                          "default": 1
+                        },
+                        "notes": {
+                          "type": "object",
+                          "default": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "parts": {
+              "description": "The stretch of a given sequence to be used in the design. A map from part id to part JSON",
+              "type": "object",
+              "additionalProperties": {
+                "required": [
+                  "id",
+                  "source_id",
+                  "start_bp",
+                  "end_bp"
+                ],
+                "description": "A part JSON",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "Unique part id",
+                    "type": "string"
+                  },
+                  "source_id": {
+                    "description": "Part source id. Must match a sequence id.",
+                    "type": "string"
+                  },
+                  "start_bp": {
+                    "description": "Defines the inclusive 5' boundary of the part in the source template",
+                    "type": "integer"
+                  },
+                  "end_bp": {
+                    "description": "Defines the inclusive 3' boundary of the part in the source template",
+                    "type": "integer"
+                  },
+                  "name": {
+                    "description": "The name of the part",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "reverse_complement": {
+                    "description": "Specifies the orientation of the part in the source template",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "five_prime_preferred_overhangs": {
+                    "description": "Preferred overhangs/overlaps for the part at its 5' end. These overhangs/overlaps must be entirely contained within the part itself",
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                      "description": "A preferred overhang/overlap is specified with a start bp and a length (in bp), in the format \"(start bp, length)\" (e.g., \"(1,4)\").",
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "three_prime_preferred_overhangs": {
+                    "description": "Preferred overhangs/overlaps for the part at its 3' end. These overhangs/overlaps must be entirely contained within the part itself",
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                      "description": "A preferred overhang/overlap is specified with a start bp and a length (in bp), in the format \"(start bp, length)\" (e.g., \"(1,4)\").",
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "bins": {
+              "required": [
+                "id",
+                "cells"
+              ],
+              "description": "The bins are the 'columns' of the design. Each bin can contain one or more cells. The order of bins in the file matches the order of bins in the resulting assembly (the last bin in the array will be cyclicly followed by the first bin). (Target Part List)",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "description": "A bin",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "Unique bin id",
+                    "type": "string"
+                  },
+                  "forced_relative_overhang": {
+                    "description": "See j5 documentation for full description (https://j5.jbei.org/j5manual/pages/40.html). The most common reasons to set an overhang position are 1) to be able to reuse a DNA oligo primer from a previous Golden Gate assembly (whose embedded type IIs endonuclease recognition site position determines the resulting overhang sequence) to re-amplify a part, and 2) to generate combinatorial Golden Gate libraries, where it is essential that all parts in a given combinatorial bin have the same flanking overhang termini (see the combinatorial Golden-gate description for more information).",
+                    "oneOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "num_of_bps": {
+                            "type": "integer"
+                          },
+                          "operator": {
+                            "enum": [
+                              "=",
+                              "<",
+                              ">"
+                            ],
+                            "default": "="
+                          }
+                        },
+                        "required": [
+                          "num_of_bps",
+                          "operator"
+                        ]
+                      }
+                    ],
+                    "default": null
+                  },
+                  "direct_synthesis_firewall": {
+                    "description": "A direct synthesis firewall \"true\" field prevents a direct synthesis piece, or an Embed_in_primer_forward strategy, or an embed_in_primer_reverse strategy, from extending from a marked target part row to the target part in the next row. The direct synthesis firewall effectively indicates an assembly junction, as no assembly piece may extend through the firewall to contain target parts on both sides.",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "extra_5prime_bps": {
+                    "description": "Only applies to SLIC/Gibson/CPEC/SLiCE style assemblies. A value of \"null\" lets j5 choose for itself. See j5 documentation for more information.",
+                    "oneOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "integer"
+                      }
+                    ],
+                    "default": null
+                  },
+                  "extra_3prime_bps": {
+                    "description": "Only applies to SLIC/Gibson/CPEC/SLiCE style assemblies. A value of \"null\" lets j5 choose for itself. See j5 documentation for more information.",
+                    "oneOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "integer"
+                      }
+                    ],
+                    "default": null
+                  },
+                  "cells": {
+                    "description": "Every cell holds a part. It is linked to the part by the part id.  Array of parts that are in the bin",
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "required": [
+                        "part_id"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "part_id": {
+                          "type": "string"
+                        },
+                        "forced_assembly_strategy": {
+                          "type": "string",
+                          "enum": [
+                            "None",
+                            "Embed_in_primer_reverse",
+                            "Embed_in_primer_forward",
+                            "Direct Synthesis",
+                            "Annealed Oligos"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "rules": {
+              "description": "Eugene rules. https://j5.jbei.org/j5manual/pages/85.html",
+              "type": "array",
+              "items": {
+                "description": "A sequence feature",
+                "type": "object",
+                "required": [
+                  "operand1",
+                  "operand2",
+                  "name",
+                  "compositionalOperator"
+                ],
+                "properties": {
+                  "operand1": {
+                    "type": "string",
+                    "description": "The part_id the rule is acting on"
+                  },
+                  "operand2": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "description": "The part_id the rule is acting on"
+                      },
+                      {
+                        "type": "integer",
+                        "description": "If using the MORETHAN operator, the second operand can be a number.",
+                        "minimum": 1
+                      }
+                    ]
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "negationOperator": {
+                    "description": "Optional rule negation operator. If truthy, the rule does the exact opposite of its original meaning",
+                    "enum": [
+                      true,
+                      false,
+                      0,
+                      1
+                    ],
+                    "default": false
+                  },
+                  "compositionalOperator": {
+                    "enum": [
+                      "AFTER",
+                      "BEFORE",
+                      "WITH",
+                      "THEN",
+                      "NEXTTO",
+                      "MORETHAN"
+                    ]
+                  }
+                }
+              }
+            },
+            "plasmids": {},
+            "oligos": {
+              "description": "The list of oligos to check against when designing new oligos. Oligos from this list will be used preferentially before synthesizing new oligos",
+              "type": "array",
+              "required": [
+                "id,sequence"
+              ],
+              "items": {
+                "properties": {
+                  "id": {
+                    "description": "Unique sequence id",
+                    "type": "string"
+                  },
+                  "sequence": {
+                    "description": "The nucleotide sequence",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "The name of the sequence",
+                    "type": "string",
+                    "default": ""
+                  }
+                }
+              }
+            },
+            "direct_syntheses": {}
+          },
+          "required": [
+            "parameters",
+            "sequences",
+            "parts",
+            "bins"
+          ]
+        },
+        "data": {
+          "parameters": {},
+          "sequences": {},
+          "parts": {},
+          "bins": [{}]
+        }
+      }
+    ]
+  }
+]

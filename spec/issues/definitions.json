@@ -26,6 +26,14 @@
             }
           }
         }
+      },
+      {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          }
+        }
       }
     ],
     "tests": [
@@ -41,7 +49,14 @@
         "description": "should fail on invalid id",
         "schema": "schemas.1",
         "throws": true,
-        "data": {}
+        "invalid": true
+      },
+      {
+        "description": "should allow id props",
+        "schema": "schemas.2",
+        "data": {
+          "id": 123
+        }
       }
     ]
   }

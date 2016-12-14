@@ -1,6 +1,7 @@
-uri = require('../lib/util/uri-helpers')
+uri = require('../lib/util/helpers')
+clone = require('../lib/util/clone-obj')
 
-xdescribe 'resolveURL()', ->
+describe 'resolveURL()', ->
   it 'should replace the last segment', ->
     expect(uri.resolveURL('a', 'b')).toBe 'b'
     expect(uri.resolveURL('x/y', 'z')).toBe 'x/z'
@@ -15,3 +16,28 @@ xdescribe 'resolveURL()', ->
 
   it 'should resolve fully-qualified URIs', ->
     expect(uri.resolveURL('//site.com/a/b/c', 'x/y')).toBe '//site.com/a/b/x/y'
+
+describe 'clone()', ->
+  it 'should clone', ->
+    object =
+      name: 'hello'
+    result = clone(object)
+    expect(object).toEqual result
+    expect(object).not.toBe result
+
+  it 'should throw for circular objects', ->
+    circular =
+      prop:
+        name: 'foo'
+    circular.prop.otherProp = circular.prop
+    expect(-> clone(circular)).toThrow()
+
+  it 'should permit shared subobjects', ->
+    subobject =
+      name: 'hello'
+    object =
+      one: subobject
+      two: subobject
+    result = clone(object)
+    expect(object).toEqual result
+    expect(object).not.toBe result

@@ -13,55 +13,67 @@ refCount = (node, acc = 0) ->
 
   acc
 
-jasmine.Matchers::toHaveRefs = (expected = 0) ->
-  if expected isnt nodes = refCount @actual
-    throw new Error "Invalid $ref count #{nodes}, expected #{expected}"
-
-  true
-
-jasmine.Matchers::toHaveSchema = (expected, refs) ->
-  validate = isMyJSONValid(expected, schemas: refs)
-
-  unless validate(@actual)
-    throw new Error validate.errors
-      .map((e) -> e.desc or e.message)
-      .join('\n')
-
-  validator = new ZSchema
-    ignoreUnresolvableReferences: false
-
-  validator.setRemoteReference(k, v) for k, v of refs
-  valid = validator.validate @actual, clone(expected)
-
-  if errors = validator.getLastErrors() or not valid
-    throw errors.map((e) ->
-      if e.code is 'PARENT_SCHEMA_VALIDATION_FAILED'
-        e.inner.map((e) -> e.message).join '\n'
+global.customMatchers =
+  toHaveRefs: ->
+    compare: (actual, expected = 0) ->
+      if expected isnt nodes = refCount actual
+        pass: false
+        message: "Invalid $ref count #{nodes}, expected #{expected}"
       else
-        e.message
-    ).join('\n') or "Invalid schema #{JSON.stringify @actual}"
+        pass: true
 
-  api = tv4.freshApi()
+  toHaveSchema: ->
+    compare: (actual, expected) ->
+      [ expected, refs ] = expected if Array.isArray(expected)
 
-  api.banUnknown = false
-  api.cyclicCheck = false
+      fail = []
 
-  api.addSchema(id, json) for id, json of refs
+      # is-my-json-valid
+      validate = isMyJSONValid(expected, schemas: refs)
 
-  result = api.validateResult @actual,
-    clone(expected), api.cyclicCheck, api.banUnknown
+      unless validate(actual)
+        fail.push validate.errors.map((e) -> e.desc or e.message).join('\n')
 
-  if result.missing.length
-    throw new Error 'Missing ' + result.missing.join(', ')
+      # z-schema
+      validator = new ZSchema
+        ignoreUnresolvableReferences: false
 
-  throw result.error if result.error
+      validator.setRemoteReference(k, clone(v)) for k, v of refs
+      valid = validator.validate actual, clone(expected)
 
-  jay = new JaySchema
-  jay.register(clone(json)) for id, json of refs
+      if errors = validator.getLastErrors() or not valid
+        fail.push errors.map((e) ->
+         if e.code is 'PARENT_SCHEMA_VALIDATION_FAILED'
+           e.inner.map((e) -> e.message).join '\n'
+         else
+           e.message
+        ).join('\n') or "Invalid schema #{JSON.stringify actual}"
 
-  result = jay.validate @actual, clone(expected)
+      # tv4
+      api = tv4.freshApi()
 
-  throw result.map((e) -> e.desc or e.message).join('\n') or
-    "Invalid schema #{JSON.stringify @actual}" if result.length
+      api.banUnknown = false
+      api.cyclicCheck = false
 
-  true
+      api.addSchema(id, clone(json)) for id, json of refs
+
+      result = api.validateResult actual,
+        clone(expected), api.cyclicCheck, api.banUnknown
+
+      if result.missing.length
+        fail.push 'Missing ' + result.missing.join(', ')
+
+      fail.push(result.error) if result.error
+
+      # jayschema
+      jay = new JaySchema
+      jay.register(clone(json)) for id, json of refs
+
+      result = jay.validate actual, clone(expected)
+
+      if result.length
+        fail.push result.map((e) -> e.desc or e.message).join('\n') or
+          "Invalid schema #{JSON.stringify actual}"
+
+      pass: !fail.length
+      message: fail.join('\n') if fail.length
