@@ -1,6 +1,6 @@
 {
   "name": "deref",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "JSON-Schema $ref resolution",
   "main": "lib/index.js",
   "repository": {

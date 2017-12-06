@@ -7,3 +7,5 @@ before_script:
   - 'npm run cover'
 script:
   - 'npm run cover:up'
+notifications:
+  email: false
