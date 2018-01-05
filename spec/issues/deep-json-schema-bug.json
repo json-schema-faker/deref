@@ -1,0 +1,114 @@
+[
+  {
+    "description": "some json-schema refs are not being resolved",
+    "tests": [
+      {
+        "description": "deep-nested refs should be properly fixed",
+        "schema": {
+          "$ref": "#/definitions/rrpt",
+          "definitions": {
+            "Meta": {
+              "type": "string"
+            },
+            "TagRuleArrReqVo": {
+              "properties": {
+                "tag_rule_arr": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "tag_rule_detial_arr": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/tagRuleDetial"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "rrpt": {
+              "type": "object",
+              "required": [
+                "code",
+                "msg"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "description": "响应编码OK"
+                },
+                "info": {
+                  "$ref": "#/definitions/rpbr"
+                }
+              }
+            },
+            "rpbr": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/ProductByTagRuleResVo"
+                }
+              }
+            },
+            "ProductByTagRuleResVo": {
+              "properties": {
+                "product_info": {
+                  "$ref": "#/definitions/ProductInfoAll"
+                },
+                "product_image": {
+                  "$ref": "#/definitions/imageItems"
+                },
+                "product_category": {
+                  "$ref": "#/definitions/Category"
+                }
+              }
+            },
+            "ProductInfoAll": {
+              "properties": {
+                "product_code": {
+                  "type": "string",
+                  "description": "唯一编码"
+                }
+              }
+            },
+            "imageItems": {
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "imageid"
+                }
+              }
+            },
+            "Category": {
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "categoryid"
+                }
+              }
+            },
+            "image_links": {
+              "properties": {
+                "image_medium_url": {
+                  "type": "string",
+                  "description": "中等图图片链接"
+                }
+              }
+            },
+            "tagRuleDetial": {
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Id"
+                }
+              }
+            }
+          }
+        },
+        "hasRefs": 0
+      }
+    ]
+  }
+]
