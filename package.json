@@ -17,10 +17,10 @@
     "test": "npm run dev:lint && npm run dev:spec"
   },
   "devDependencies": {
-    "clone": "^0.1.19",
+    "clone": "^2.0.0",
     "codecov": "^1.0.1",
-    "eslint": "^2.3.0",
-    "glob": "^4.5.3",
+    "eslint": "^3.9.1",
+    "glob": "^7.1.1",
     "is-my-json-valid": "^2.13.1",
     "istanbul": "^0.4.2",
     "jasmine-node": "2.0.0-beta4",
