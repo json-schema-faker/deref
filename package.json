@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/json-schema-faker/deref"
+    "url": "https://github.com/json-schema-faker/deref.git"
   },
   "license": "MIT",
   "scripts": {
@@ -33,5 +33,13 @@
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/json-schema-faker/deref/issues"
+  },
+  "homepage": "https://github.com/json-schema-faker/deref#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "author": "JSON Schema Faker"
 }
